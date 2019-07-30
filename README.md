@@ -1,4 +1,4 @@
-# accounts-coding-test-requirements-submission
+# accounts-coding-test-submission
 
 > A Vue.js project
 
