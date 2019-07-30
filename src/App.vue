@@ -14,7 +14,7 @@
               <li><label>Name:</label>{{ account.LastName }}, {{ account.FirstName }}</li>
               <li><label>Email:</label>{{ account.Email }}</li>
               <li><label>Phone Number:</label>{{ account.PhoneNumber | formatPhone }}</li>
-              <li><label>Amount Due:</label>{{ account.AmountDue | formatAmountDue }}</li>
+              <li><label>Amount Due:</label>${{ account.AmountDue | formatAmountDue }}</li>
               <li v-if="account.PaymentDueDate != null"><label>Due Date:</label>{{ account.PaymentDueDate | formatDateDue }}</li>
               <br>
             </ul>
@@ -29,7 +29,7 @@
               <li><label>Name:</label>{{ account.LastName }}, {{ account.FirstName }}</li>
               <li><label>Email:</label>{{ account.Email }}</li>
               <li><label>Phone Number:</label>{{ account.PhoneNumber | formatPhone }}</li>
-              <li><label>Amount Due:</label>{{ account.AmountDue | formatAmountDue }}</li>
+              <li><label>Amount Due:</label>${{ account.AmountDue | formatAmountDue }}</li>
               <li v-if="account.PaymentDueDate != null"><label>Due Date:</label>{{ account.PaymentDueDate | formatDateDue }}</li>
               <br>
             </ul>
@@ -44,7 +44,7 @@
               <li><label>Name:</label>{{ account.LastName }}, {{ account.FirstName }}</li>
               <li><label>Email:</label>{{ account.Email }}</li>
               <li><label>Phone Number:</label>{{ account.PhoneNumber | formatPhone }}</li>
-              <li><label>Amount Due:</label>{{ account.AmountDue | formatAmountDue }}</li>
+              <li><label>Amount Due:</label>${{ account.AmountDue | formatAmountDue }}</li>
               <li v-if="account.PaymentDueDate != null"><label>Due Date:</label>{{ account.PaymentDueDate | formatDateDue }}</li>
               <br>
             </ul>
@@ -83,7 +83,7 @@ export default {
          + value.substring(6, 10);
     },
     formatAmountDue: function (value) {
-      return "$" + parseInt(value) / 10 < 1 ? "0" + value.toFixed(2) : value.toFixed(2) + " USD";
+      return parseInt(value) / 10 < 1 ? "0" + value.toFixed(2) : value.toFixed(2) + " USD";
     },
     formatDateDue: function (value) {
       var splitDate = value.substring(0, 10).split("-")
