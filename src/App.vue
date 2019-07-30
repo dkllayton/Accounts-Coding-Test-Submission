@@ -13,9 +13,9 @@
             <ul class="account-data-list" v-for="account in getActiveAccounts" v-bind:key="account.id">
               <li><label>Name:</label>{{ account.LastName }}, {{ account.FirstName }}</li>
               <li><label>Email:</label>{{ account.Email }}</li>
-              <li><label>Phone Number:</label>{{ "(" + account.PhoneNumber.substring(0, 3) + ")-" + account.PhoneNumber.substring(3, 6) + "-" + account.PhoneNumber.substring(6, 10) }}</li>
-              <li><label>Amount Due:</label>${{ parseInt(account.AmountDue) / 10 < 1 ? "0" + account.AmountDue.toFixed(2) : account.AmountDue.toFixed(2) }} USD</li>
-              <li v-if="account.PaymentDueDate != null"><label>Due Date:</label>{{ "(" + account.PaymentDueDate.substring(0, 10).split("-")[1] + "/" + account.PaymentDueDate.substring(0, 10).split("-")[2] + "/" + account.PaymentDueDate.substring(0, 10).split("-")[0] + ")" }}</li>
+              <li><label>Phone Number:</label>{{ account.PhoneNumber | formatPhone }}</li>
+              <li><label>Amount Due:</label>{{ account.AmountDue | formatAmountDue }}</li>
+              <li v-if="account.PaymentDueDate != null"><label>Due Date:</label>{{ account.PaymentDueDate | formatDateDue }}</li>
               <br>
             </ul>
           </div>     
@@ -28,9 +28,9 @@
             <ul class="account-data-list" v-for="account in getOverdueAccounts" v-bind:key="account.id">
               <li><label>Name:</label>{{ account.LastName }}, {{ account.FirstName }}</li>
               <li><label>Email:</label>{{ account.Email }}</li>
-              <li><label>Phone Number:</label>{{ "(" + account.PhoneNumber.substring(0, 3) + ")-" + account.PhoneNumber.substring(3, 6) + "-" + account.PhoneNumber.substring(6, 10) }}</li>
-              <li><label>Amount Due:</label>${{ parseInt(account.AmountDue) / 10 < 1 ? "0" + account.AmountDue.toFixed(2) : account.AmountDue.toFixed(2) }} USD</li>
-              <li v-if="account.PaymentDueDate != null"><label>Due Date:</label>{{ "(" + account.PaymentDueDate.substring(0, 10).split("-")[1] + "/" + account.PaymentDueDate.substring(0, 10).split("-")[2] + "/" + account.PaymentDueDate.substring(0, 10).split("-")[0] + ")" }}</li>
+              <li><label>Phone Number:</label>{{ account.PhoneNumber | formatPhone }}</li>
+              <li><label>Amount Due:</label>{{ account.AmountDue | formatAmountDue }}</li>
+              <li v-if="account.PaymentDueDate != null"><label>Due Date:</label>{{ account.PaymentDueDate | formatDateDue }}</li>
               <br>
             </ul>
           </div>
@@ -43,9 +43,9 @@
             <ul class="account-data-list" v-for="account in getInactiveAccounts" v-bind:key="account.id">
               <li><label>Name:</label>{{ account.LastName }}, {{ account.FirstName }}</li>
               <li><label>Email:</label>{{ account.Email }}</li>
-              <li><label>Phone Number:</label>{{ "(" + account.PhoneNumber.substring(0, 3) + ")-" + account.PhoneNumber.substring(3, 6) + "-" + account.PhoneNumber.substring(6, 10) }}</li>
-              <li><label>Amount Due:</label>${{ parseInt(account.AmountDue) / 10 < 1 ? "0" + account.AmountDue.toFixed(2) : account.AmountDue.toFixed(2) }} USD</li>
-              <li v-if="account.PaymentDueDate != null"><label>Due Date:</label>{{ "(" + account.PaymentDueDate.substring(0, 10).split("-")[1] + "/" + account.PaymentDueDate.substring(0, 10).split("-")[2] + "/" + account.PaymentDueDate.substring(0, 10).split("-")[0] + ")" }}</li>
+              <li><label>Phone Number:</label>{{ account.PhoneNumber | formatPhone }}</li>
+              <li><label>Amount Due:</label>{{ account.AmountDue | formatAmountDue }}</li>
+              <li v-if="account.PaymentDueDate != null"><label>Due Date:</label>{{ account.PaymentDueDate | formatDateDue }}</li>
               <br>
             </ul>
           </div>
@@ -74,6 +74,20 @@ export default {
     },
     getInactiveAccounts: function() {
       return this.getAccounts(1);
+    }
+  },
+  filters: {
+    formatPhone: function (value) {
+      return "(" + value.substring(0, 3) + ")-"
+         + value.substring(3, 6) + "-"
+         + value.substring(6, 10);
+    },
+    formatAmountDue: function (value) {
+      return "$" + parseInt(value) / 10 < 1 ? "0" + value.toFixed(2) : value.toFixed(2) + " USD";
+    },
+    formatDateDue: function (value) {
+      var splitDate = value.substring(0, 10).split("-")
+      return "(" + splitDate[1] + "/" + splitDate[2] + "/" + splitDate[0] + ")";
     }
   },
   methods: {
